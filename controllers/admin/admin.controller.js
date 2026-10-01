@@ -454,80 +454,8 @@ exports.setPassword = async (req, res) => {
   }
 };
 
-// auto import playlist
-const play = require("play-dl");
-const Category = require("../../models/category.model");
-const MovieSeries = require("../../models/movieSeries.model");
-const ShortVideo = require("../../models/shortVideo.model");
-
+// auto import playlist (stub)
 exports.autoImportPlaylist = async (req, res) => {
-  try {
-    const { playlistUrl, categoryName = "Drama" } = req.body;
-    if (!playlistUrl) {
-      return res.status(200).json({ status: false, message: "Playlist URL is required!" });
-    }
-
-    const playlist = await play.playlist_info(playlistUrl, { incomplete: true });
-    if (!playlist || !playlist.videos || playlist.videos.length === 0) {
-      return res.status(200).json({ status: false, message: "No videos found in this playlist." });
-    }
-
-    const seriesTitle = playlist.title || "Imported Web Series";
-    const seriesDesc = playlist.description || `Auto-imported series from YouTube with ${playlist.videos.length} episodes.`;
-    const bannerUrl = (playlist.thumbnail && playlist.thumbnail.url) || (playlist.videos[0]?.thumbnails[0]?.url) || "https://images.unsplash.com/photo-1518173946687-a4c8a383392e?w=800";
-    const thumbUrl = (playlist.videos[0]?.thumbnails[0]?.url) || bannerUrl;
-
-    let category = await Category.findOne({ name: new RegExp(`^${categoryName}$`, "i") });
-    if (!category) {
-      category = await Category.create({
-        name: categoryName,
-        uniqueId: `CAT-${categoryName.substring(0, 3).toUpperCase()}-${Date.now().toString().slice(-4)}`,
-        isActive: true,
-      });
-    }
-
-    const movieSeries = await MovieSeries.create({
-      category: category._id,
-      name: seriesTitle,
-      description: seriesDesc,
-      banner: bannerUrl,
-      thumbnail: thumbUrl,
-      type: 2,
-      maxAdsForFreeView: 2,
-      releaseDate: new Date(),
-      isTrending: true,
-      isAutoAnimateBanner: true,
-      isActive: true,
-    });
-
-    const episodes = playlist.videos.map((v, i) => {
-      const isLocked = i >= 3;
-      const epThumb = v.thumbnails && v.thumbnails.length > 0 ? v.thumbnails[v.thumbnails.length - 1].url : thumbUrl;
-      return {
-        movieSeries: movieSeries._id,
-        episodeNumber: i,
-        videoImage: epThumb,
-        videoUrl: v.url || `https://www.youtube.com/watch?v=${v.id}`,
-        duration: v.durationInSec || 60,
-        coin: isLocked ? 20 : 0,
-        isLocked: isLocked,
-        releaseDate: new Date(),
-      };
-    });
-
-    await ShortVideo.insertMany(episodes);
-
-    return res.status(200).json({
-      status: true,
-      message: `Successfully imported "${seriesTitle}" with ${episodes.length} episodes!`,
-      data: {
-        seriesId: movieSeries._id,
-        title: seriesTitle,
-        totalEpisodes: episodes.length,
-      },
-    });
-  } catch (error) {
-    console.error("Auto import error:", error);
-    return res.status(500).json({ status: false, message: error.message || "Failed to auto-import playlist." });
-  }
+  return res.status(200).json({ status: false, message: "Use direct seeding scripts" });
 };
+
