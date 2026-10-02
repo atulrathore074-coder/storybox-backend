@@ -68,9 +68,14 @@ async function startServer() {
     console.log("Mongo: successfully connected to db");
   });
 
+  app.get("/", (req, res) => {
+    res.status(200).json({ status: true, message: "StoryBox Backend is running successfully!" });
+  });
+
   // Step 3: Start Server after all setup is done
-  app.listen(process?.env.PORT, () => {
-    console.log("Hello World ! listening on " + process.env.PORT);
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log("Hello World ! listening on " + PORT);
   });
 }
 
