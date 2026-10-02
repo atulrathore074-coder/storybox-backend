@@ -49,34 +49,33 @@ const db = require("./util/connection");
 const initializeSettings = require("./util/initializeSettings");
 
 async function startServer() {
-  console.log("🔄 Initializing settings...");
-  await initializeSettings(); // Ensure settings are loaded before other modules
-
-  console.log("✅ Settings Loaded");
-
-  // Step 2: Require all other modules after settings are initialized
+  // Step 1: Mount routes immediately
   const routes = require("./routes/index");
   app.use("/api", routes);
 
   app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-  db.on("error", () => {
-    console.log("Connection Error: ");
-  });
-
-  db.once("open", async () => {
-    console.log("Mongo: successfully connected to db");
-  });
-
   app.get("/", (req, res) => {
     res.status(200).json({ status: true, message: "StoryBox Backend is running successfully!" });
   });
 
-  // Step 3: Start Server after all setup is done
+  db.on("error", (err) => {
+    console.log("Mongo Connection Error: ", err?.message || err);
+  });
+
+  db.once("open", async () => {
+    console.log("Mongo: successfully connected to db");
+    await initializeSettings();
+  });
+
+  // Step 2: Start Server immediately
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
     console.log("Hello World ! listening on " + PORT);
   });
+
+  // Attempt initial settings load
+  initializeSettings();
 }
 
 // Run server startup

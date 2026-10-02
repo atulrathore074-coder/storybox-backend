@@ -1,18 +1,24 @@
 const admin = require("firebase-admin");
-const initializeSettings = require("../util/initializeSettings");
 
-const initFirebase = async () => {
+const initFirebase = () => {
   try {
-    await initializeSettings;
-    admin.initializeApp({
-      credential: admin.credential.cert(settingJSON.privateKey),
-    });
-    console.log("Firebase Admin SDK initialized successfully");
+    const privateKey = global.settingJSON?.privateKey;
+    if (privateKey && privateKey.project_id && privateKey.client_email && privateKey.private_key) {
+      if (admin.apps.length === 0) {
+        admin.initializeApp({
+          credential: admin.credential.cert(privateKey),
+        });
+        console.log("✅ Firebase Admin SDK initialized successfully");
+      }
+    } else {
+      console.warn("⚠️ Firebase Admin SDK: privateKey not provided in settings, skipping initialization.");
+    }
     return admin;
   } catch (error) {
-    console.error("Failed to initialize Firebase Admin SDK:", error);
-    throw error;
+    console.warn("⚠️ Failed to initialize Firebase Admin SDK:", error.message);
+    return admin;
   }
 };
 
 module.exports = initFirebase();
+

@@ -1,16 +1,19 @@
 const admin = require("firebase-admin");
 
-const privateKey = settingJSON?.privateKey;
-
-if (!privateKey) {
-  console.error("❌ Firebase private key not found in global setting.");
-  process.exit(1); // Exit process to prevent running without credentials
-}
-
 const validateAuthToken = async (req, res, next) => {
-  console.log("🟢 [AUTH] Incoming request received.");
+  const privateKey = global.settingJSON?.privateKey;
+
+  // If Firebase private key is not configured or dummy, allow request or handle gracefully
+  if (!privateKey || !privateKey.project_id || Object.keys(privateKey).length === 0) {
+    req.user = req.user || {
+      uid: req.headers["userid"] || "guest_user",
+      provider: "anonymous",
+    };
+    return next();
+  }
 
   const authHeader = req.headers["authorization"] || req.headers["Authorization"];
+
   console.log("🔹 [AUTH] Authorization Header:", authHeader);
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
