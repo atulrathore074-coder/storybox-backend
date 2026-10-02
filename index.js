@@ -68,11 +68,26 @@ async function startServer() {
     await initializeSettings();
   });
 
-  // Step 2: Start Server immediately
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log("Hello World ! listening on " + PORT);
+  // Step 2: Start Server immediately on 0.0.0.0
+  const port = process.env.PORT ? parseInt(process.env.PORT) : 10000;
+  app.listen(port, "0.0.0.0", () => {
+    console.log(`Hello World ! listening on 0.0.0.0:${port}`);
   });
+
+  if (port !== 10000) {
+    try {
+      app.listen(10000, "0.0.0.0", () => {
+        console.log("Also listening on 0.0.0.0:10000 for Render");
+      });
+    } catch (e) {}
+  }
+  if (port !== 5000) {
+    try {
+      app.listen(5000, "0.0.0.0", () => {
+        console.log("Also listening on 0.0.0.0:5000");
+      });
+    } catch (e) {}
+  }
 
   // Attempt initial settings load
   initializeSettings();
