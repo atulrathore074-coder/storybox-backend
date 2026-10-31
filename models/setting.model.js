@@ -91,6 +91,17 @@ const settingSchema = new mongoose.Schema(
         reward: { type: String, default: "ios_reward_id" },
       },
     },
+
+    // Unity Ads Setting
+    unity: {
+      isActive: { type: Boolean, default: true },
+      androidGameId: { type: String, default: "6058595" },
+      iosGameId: { type: String, default: "6058594" },
+      rewardAdId: { type: String, default: "Rewarded_Android" },
+      interstitialAdId: { type: String, default: "Interstitial_Android" },
+      bannerAdId: { type: String, default: "Banner_Android" },
+      isTestMode: { type: Boolean, default: false },
+    },
   },
   {
     timestamps: true,

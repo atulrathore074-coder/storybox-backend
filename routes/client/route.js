@@ -1,4 +1,4 @@
-//express
+﻿//express
 const express = require("express");
 const route = express.Router();
 
@@ -17,6 +17,7 @@ const watchHistory = require("./watchHistory.route");
 const coinplan = require("./coinplan.route");
 const vipPlan = require("./vipPlan.route");
 const contentpage = require("./contentPage.route");
+const withdraw = require("./withdraw.route");
 
 //exports client's route.js
 route.use("/user", user);
@@ -33,5 +34,6 @@ route.use("/watchHistory", watchHistory);
 route.use("/coinplan", coinplan);
 route.use("/vipPlan", vipPlan);
 route.use("/contentpage", contentpage);
+route.use("/withdraw", withdraw);
 
 module.exports = route;

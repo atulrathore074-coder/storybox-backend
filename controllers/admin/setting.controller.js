@@ -51,6 +51,18 @@ exports.updateSetting = async (req, res) => {
     setting.ios.google.native = req.body.iosGoogleNative ? req.body.iosGoogleNative : setting.ios.google.native;
     setting.ios.google.reward = req.body.iosGoogleReward ? req.body.iosGoogleReward : setting.ios.google.reward;
 
+    // Unity Ads Update
+    if (req.body.unity) {
+      if (!setting.unity) setting.unity = {};
+      if (req.body.unity.isActive !== undefined) setting.unity.isActive = req.body.unity.isActive;
+      if (req.body.unity.androidGameId !== undefined) setting.unity.androidGameId = req.body.unity.androidGameId;
+      if (req.body.unity.iosGameId !== undefined) setting.unity.iosGameId = req.body.unity.iosGameId;
+      if (req.body.unity.rewardAdId !== undefined) setting.unity.rewardAdId = req.body.unity.rewardAdId;
+      if (req.body.unity.interstitialAdId !== undefined) setting.unity.interstitialAdId = req.body.unity.interstitialAdId;
+      if (req.body.unity.bannerAdId !== undefined) setting.unity.bannerAdId = req.body.unity.bannerAdId;
+      if (req.body.unity.isTestMode !== undefined) setting.unity.isTestMode = req.body.unity.isTestMode;
+    }
+
     setting.doEndpoint = req.body.doEndpoint ? req.body.doEndpoint : setting.doEndpoint;
     setting.doAccessKey = req.body.doAccessKey ? req.body.doAccessKey : setting.doAccessKey;
     setting.doSecretKey = req.body.doSecretKey ? req.body.doSecretKey : setting.doSecretKey;

@@ -1,4 +1,4 @@
-module.exports = {
+﻿module.exports = {
   "currency": {
     "name": "USD",
     "symbol": "$",
@@ -38,10 +38,10 @@ module.exports = {
   "privacyPolicyLink": "https://www.termsfeed.com/live/ae4296b0-36ce-4c8d-82ee-8400ae94f581",
   "termsOfUsePolicyLink": "https://www.termsfeed.com/live/ae4296b0-36ce-4c8d-82ee-8400ae94f581",
   "durationOfShorts": 180,
-  "minCoinForCashOut": 0,
-  "minWithdrawalRequestedCoin": 0,
+  "minCoinForCashOut": 100,
+  "minWithdrawalRequestedCoin": 1000,
   "referralRewardCoins": 40,
-  "watchingVideoRewardCoins": 100,
+  "watchingVideoRewardCoins": 5,
   "commentingRewardCoins": 100,
   "likeVideoRewardCoins": 100,
   "loginRewardCoins": 5000,

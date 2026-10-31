@@ -1,4 +1,4 @@
-//express
+﻿//express
 const express = require("express");
 const route = express.Router();
 
@@ -25,6 +25,7 @@ const history = require("./history.route");
 const setting = require("./setting.route");
 const notification = require("./notification.route");
 const contentPage = require("./contentPage.route");
+const withdraw = require("./withdraw.route");
 
 //exports admin's route.js
 route.use("/admin", admin);
@@ -46,5 +47,6 @@ route.use("/history", AdminMiddleware, history);
 route.use("/setting", AdminMiddleware, setting);
 route.use("/notification", AdminMiddleware, notification);
 route.use("/contentPage", AdminMiddleware, contentPage);
+route.use("/withdraw", AdminMiddleware, withdraw);
 
 module.exports = route;
