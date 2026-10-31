@@ -45,7 +45,7 @@ module.exports = {
   "commentingRewardCoins": 2,
   "likeVideoRewardCoins": 1,
   "loginRewardCoins": 20,
-  "maxAdPerDay": 6,
+  "maxAdPerDay": 20,
   "isGoogle": false,
   "privateKey": {},
   "createdAt": "2024-10-21T11:47:03.908Z",
