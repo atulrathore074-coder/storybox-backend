@@ -1,4 +1,4 @@
-﻿module.exports = {
+module.exports = {
   "currency": {
     "name": "USD",
     "symbol": "$",
@@ -42,9 +42,9 @@
   "minWithdrawalRequestedCoin": 1000,
   "referralRewardCoins": 40,
   "watchingVideoRewardCoins": 5,
-  "commentingRewardCoins": 100,
-  "likeVideoRewardCoins": 100,
-  "loginRewardCoins": 5000,
+  "commentingRewardCoins": 2,
+  "likeVideoRewardCoins": 1,
+  "loginRewardCoins": 20,
   "maxAdPerDay": 6,
   "isGoogle": false,
   "privateKey": {},

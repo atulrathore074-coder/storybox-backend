@@ -165,7 +165,7 @@ exports.loginOrSignUp = async (req, res) => {
         }
       }
 
-      const bonusCoins = settingJSON.loginRewardCoins ? settingJSON.loginRewardCoins : 5000;
+      const bonusCoins = settingJSON.loginRewardCoins ? settingJSON.loginRewardCoins : 20;
 
       const newUser = new User();
       newUser.referralCode = referralCode;
