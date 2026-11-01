@@ -38,12 +38,14 @@ exports.fetchNewReleasesForUser = async (req, res) => {
             _id: 1,
             name: 1,
             thumbnail: 1,
+            releaseDate: 1,
+            createdAt: 1,
             totalViews: {
               $size: "$watchHistories", // Total number of views for all videos in this movie series
             },
           },
         },
-        { $sort: { releaseDate: -1 } },
+        { $sort: { createdAt: -1, releaseDate: -1 } },
         { $skip: (start - 1) * limit },
         { $limit: limit },
       ]),
@@ -160,6 +162,7 @@ exports.getTrendingMoviesSeries = async (req, res) => {
     const limit = req.query.limit ? parseInt(req.query.limit) : 20;
 
     const trendingItems = await MovieSeries.find({ isActive: true, isTrending: true })
+      .sort({ createdAt: -1, releaseDate: -1 })
       .select("name thumbnail description")
       .populate("category", "name")
       .skip((start - 1) * limit)
