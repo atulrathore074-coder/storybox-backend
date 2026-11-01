@@ -359,7 +359,7 @@ exports.getVideosGroupedByMovieSeries = async (req, res) => {
           },
         },
         {
-          $match: { episodeNumber: 0 },
+          $sort: { episodeNumber: 1 },
         },
         {
           $group: {
