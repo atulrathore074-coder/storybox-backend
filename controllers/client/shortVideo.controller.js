@@ -157,6 +157,9 @@ exports.retrieveMovieSeriesVideosForUser = async (req, res) => {
           },
         },
         {
+          $sort: { episodeNumber: 1 },
+        },
+        {
           $group: {
             _id: "$movieSeriesDetails._id",
             movieSeriesName: { $first: "$movieSeriesDetails.name" },
@@ -203,6 +206,10 @@ exports.retrieveMovieSeriesVideosForUser = async (req, res) => {
 
     // Check if the auto-unlock is enabled for this user and movie series
     const isAutoUnlockEnabled = autoUnlockStatus ? autoUnlockStatus.isAutoUnlockEpisodes : false;
+
+    if (videos[0] && Array.isArray(videos[0].videos)) {
+      videos[0].videos.sort((a, b) => (parseInt(a.episodeNumber, 10) || 0) - (parseInt(b.episodeNumber, 10) || 0));
+    }
 
     return res.status(200).json({
       status: true,

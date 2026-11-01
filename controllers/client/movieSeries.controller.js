@@ -103,6 +103,9 @@ exports.getMoviesGroupedByCategory = async (req, res) => {
         },
       },
       {
+        $sort: { releaseDate: -1, createdAt: -1 },
+      },
+      {
         $group: {
           _id: "$category",
           movies: {
@@ -177,7 +180,7 @@ exports.getTrendingMoviesSeries = async (req, res) => {
 //fetch movies or web series (home - banner is auto-animated) (client / web )
 exports.fetchMoviesSeries = async (req, res) => {
   try {
-    const movieSeries = await MovieSeries.find({ isActive: true, isAutoAnimateBanner: true }).select("thumbnail banner name").lean();
+    const movieSeries = await MovieSeries.find({ isActive: true, isAutoAnimateBanner: true }).sort({ releaseDate: -1, createdAt: -1 }).select("thumbnail banner name").lean();
 
     return res.status(200).json({
       status: true,
